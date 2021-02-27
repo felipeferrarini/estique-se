@@ -1,38 +1,27 @@
-import Head from "next/head";
-import { disconnect } from "process";
-import React from "react";
-import ChallengeBox from "../components/ChallengeBox";
-import {CompletedChallenges} from "../components/CompletedChallenges";
-import { CountDown } from "../components/CountDown";
-import { ExperienceBar } from "../components/ExperienceBar";
-import { Profile } from "../components/Profile";
-import { CountDownProvider } from "../contexts/CountDownContex";
-
+import { useRouter } from 'next/dist/client/router';
+import { FaArrowRight } from 'react-icons/fa';
 import styles from '../styles/pages/Home.module.css';
 
-export default function Home() {
+export default function Home () {
+  const router = useRouter();
+
   return (
     <div className={styles.container}>
-
-      <Head>
-        <title>Inicio | Home Office Health</title>
-      </Head>
-
-      <ExperienceBar/>
-
-      <CountDownProvider>
-        <section>
-          <div>
-            <Profile/>
-            <CompletedChallenges/>
-            <CountDown/>
-          </div>
-
-          <div>
-            <ChallengeBox/>
-          </div>
-        </section>
-      </CountDownProvider>
+      <div className={styles.main}>
+        <header>
+          <h1>
+            Home Office Health
+          </h1>
+          <h2>
+            Next Level Week #04
+          </h2>
+        </header>
+        <button onClick={() => router.push('/Login')}>
+          Login
+          <FaArrowRight/>
+        </button>
+        <img src="/logo-landing.svg" alt=""/>
+      </div>
     </div>
   )
 }

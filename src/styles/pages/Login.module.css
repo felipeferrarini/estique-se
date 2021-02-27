@@ -1,0 +1,148 @@
+.container {
+  background-color: var(--blue);
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 1024px){
+  .container {
+    justify-content: center;
+  } 
+}
+
+@media screen and (max-width: 425px){
+  .container {
+    padding: 1rem;
+  } 
+}
+
+.container > img {
+  width: 40rem;
+}
+
+@media screen and (max-width: 1024px){
+  .container > img {
+    display: none;
+  } 
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  margin-right: 15rem;
+}
+
+@media screen and (max-width: 1024px){
+  .main {
+    margin-right: 0;
+  } 
+}
+
+.main img {
+  margin-bottom: 5rem;
+  height: 5.5rem;
+}
+
+@media screen and (max-width: 320px){
+  .main img {
+    height: 4.2rem;
+  } 
+}
+
+.main strong {
+  font-size: 2.5rem;
+  color: var(--white);
+
+  margin-bottom: 1.5rem;
+}
+
+.main p {
+  color: var(--text-highlight);
+  font-size: 1.5rem;
+  line-height: 2rem;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  
+  max-width: 27rem;
+  margin-bottom: 1.5rem;
+}
+
+@media screen and (max-width: 1000px){
+  .main p {
+    max-width: 20rem;
+  } 
+}
+
+.main p svg {
+  font-size: 3rem;
+  margin-right: 1.5rem;
+}
+
+.login {
+  display: flex;
+  flex-direction: row;
+}
+
+.login input {
+  height: 5rem;
+
+  border-radius: 5px;
+  border: 0;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2), var(--blue));
+  outline-color: var(--white);
+
+  padding-left: 2rem;
+  font-size: 1.5rem;
+  color: var(--text-highlight);
+}
+
+@media screen and (max-width: 425px){
+  .login input {
+    width: 100%;
+  } 
+}
+
+.login input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: var(--text-highlight);
+  opacity: 1; /* Firefox */
+}
+
+.login input::-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: var(--text-highlight);
+}
+
+.login input::-ms-input-placeholder { /* Microsoft Edge */
+  color: var(--text-highlight);
+}
+
+.loginButton {
+  width: 5rem;
+  height: 5rem;
+  
+  border-radius: 0 5px 5px 0;
+  border: 0;
+
+  background-color: rgba(0, 0, 0, 0.2);
+  font-size: 2rem;
+  color: var(--white);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: 0.2s all;
+  outline-color: var(--white);
+}
+
+.loginButtonActive {
+  background-color: var(--green);
+}

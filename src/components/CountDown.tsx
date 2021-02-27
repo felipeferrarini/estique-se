@@ -16,6 +16,8 @@ export function CountDown() {
   const [minuteLeft, minuteRight] = String(minutes).padStart(2, '0').split('');
   const [secondLeft, secondRight] = String(seconds).padStart(2, '0').split('');
 
+  const width = 50;
+
   return (
     <div>
       <div className={styles.CountDownContainer}>
@@ -34,7 +36,10 @@ export function CountDown() {
       
       <button 
         disabled={hasFinished}
-        className={`${styles.startButton} ${isActive && styles.startButtonActive}`} 
+        className={`
+          ${styles.startButton} 
+          ${isActive && styles.startButtonActive}
+        `} 
         type="button"
         onClick={isActive ? resetCountDown : startCountDown}
       >

@@ -5,16 +5,17 @@ import { useRouter } from 'next/router';
 import { MdExitToApp } from 'react-icons/md';
 
 export default function SideBar() {
-  const { pathname } = useRouter();
+  const { pathname, push } = useRouter();
 
   return (
     <div className={styles.container}>
-      <img src="/icone.svg" alt="Icone"/>
+      <img src="/icone.svg" alt="Icone" onClick={() => push('/')}/>
       <div className={styles.navigate}>
         <button 
           className={
-            `${styles.navigateButton} ${pathname === '/App' && styles.navigateButtonActive}`
+            `${styles.navigateButton} ${pathname === '/Home' && styles.navigateButtonActive}`
           }
+          onClick={() => push('/Home')}
         >
           <BiHomeAlt/>
         </button>
@@ -22,6 +23,7 @@ export default function SideBar() {
           className={
             `${styles.navigateButton} ${pathname === '/Leaderboard' && styles.navigateButtonActive}`
           }
+          onClick={() => push('/Leaderboard')}
         >
           <FiAward/>
         </button>

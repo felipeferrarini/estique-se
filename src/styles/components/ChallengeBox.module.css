@@ -76,35 +76,47 @@
 .challengeActive footer {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  margin: -1.5rem -2rem;
 }
 
 .challengeActive footer button {
-  height: 3rem;
+  height: 5rem;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
   border: 0;
-  border-radius: 5px;
-
-  color: var(--white);
+  border-top: 2px solid var(--gray-line);
 
   font-size: 1rem;
   font-weight: 600;
 
-  transition: filter 0.2s;
+  transition: all 0.2s;
 }
 
 .challengeActive footer button.challengeFailedButton {
-  background: var(--red);
+  background: var(--red-light);
+  border-radius: 0 0 0 5px;
+  border-right: 1px solid var(--gray-line);
+  color: var(--red);
 }
 
 .challengeActive footer button.challengeCompletedButton {
-  background: var(--green);
+  background: var(--green-light);
+  border-radius: 0 0 5px 0;
+  border-left: 1px solid var(--gray-line);
+  color: var(--green);
 }
 
-.challengeActive footer button:hover{
-  filter: brightness(0.9);
+.challengeActive footer button.challengeFailedButton:hover {
+  background: var(--red);
+  color: var(--white);
+  border-color: transparent;
+}
+
+.challengeActive footer button.challengeCompletedButton:hover {
+  background: var(--green);
+  color: var(--white);
+  border-color: transparent;
 }

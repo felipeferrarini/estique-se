@@ -8,7 +8,7 @@ import { Profile } from "../../components/Profile";
 import SideBar from "../../components/SideBar";
 import { ChallengesProvider } from "../../contexts/ChallengesContext";
 import { CountDownProvider } from "../../contexts/CountDownContex";
-import styles from '../../styles/pages/App.module.css';
+import styles from '../../styles/pages/Home.module.css';
 
 interface HomeProps {
   level: number;
@@ -16,7 +16,7 @@ interface HomeProps {
   challengesCompleted: number;
 }
 
-const App: React.FC<HomeProps> = ({ 
+const Home: React.FC<HomeProps> = ({ 
   level, 
   currentExperience, 
   challengesCompleted 
@@ -57,7 +57,7 @@ const App: React.FC<HomeProps> = ({
   )
 }
 
-export default App;
+export default Home;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
 

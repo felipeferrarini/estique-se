@@ -1,5 +1,6 @@
 .overlay {
-  background: rgba(242, 243, 245, 0.8);  
+  background-color: rgba(242, 243, 245, 0.9);
+  z-index: 5;
   position: fixed;
   top: 0;
   bottom: 0;
@@ -17,9 +18,10 @@
   max-width: 400px;
   padding: 2rem 3rem;
   border-radius: 5px;
-  box-shadow: 0 0 60px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
   text-align: center;  
   position: relative;
+  z-index: 100;
 } 
 
 
@@ -32,7 +34,7 @@
 }
 
 .levelupContainer strong {
-  font-size: 2.25rem;
+  font-size: 1.875rem;
   color: var(--title);
 }
 
@@ -41,7 +43,7 @@
   color: var(--text);
   margin-top: 0.25rem;
 }
-.levelupContainer button {
+.closeButton {
   position: absolute;
   right: 0.5rem;
   top: 0.5rem;
@@ -49,3 +51,46 @@
   border: 0;
   font-size: 0px;
 }
+
+.shareButton {
+  height: 5rem;
+  width: calc(100% + 6rem);  
+  margin: -2rem -3rem;
+  margin-top: 2rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 0;
+  border-top: 2px solid var(--gray-line);
+  border-radius: 0 0 5px 5px;
+  background-color: var(--blue-light);
+
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--blue-twitter);
+
+  transition: all 0.2s;
+}
+
+.shareButton:hover {
+  background: var(--blue-twitter);
+  color: var(--white);
+  border-color: transparent;
+}
+
+.shareButton svg {
+  margin-left: 1rem;
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.shareButton svg path {
+  transition: all 0.2s;
+}
+
+.shareButton:hover svg path{
+  fill: var(--white);
+}
+

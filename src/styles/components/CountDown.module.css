@@ -21,6 +21,7 @@
   border-radius: 5px;
   font-size: 8.5rem;
   text-align: center;
+  position: relative;
 }
 
 .CountDownContainer > div span {
@@ -73,18 +74,6 @@
   color: var(--text);
   position: relative;
 }
-
-/* .startButtonActive::after {
-  content: '';
-  width: width;
-  height: 5px;
-  background: var(--green);
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  border-radius: 0 0 5px 5px;
-  z-index: 2;
-} */
 
 .startButtonActive:not(:disabled):hover {
   background-color: var(--red);

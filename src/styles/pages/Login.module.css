@@ -56,7 +56,7 @@
 }
 
 .main strong {
-  font-size: 2.5rem;
+  font-size: 2.25rem;
   color: var(--white);
 
   margin-bottom: 1.5rem;
@@ -64,7 +64,7 @@
 
 .main p {
   color: var(--text-highlight);
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   line-height: 2rem;
 
   display: flex;
@@ -95,14 +95,21 @@
 .login input {
   height: 5rem;
 
-  border-radius: 5px;
-  border: 0;
+  border-radius: 5px 0 0 5px;
+  border: 2px solid transparent;
   background: linear-gradient(to right, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2), var(--blue));
-  outline-color: var(--white);
+  outline: 0;
 
   padding-left: 2rem;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   color: var(--text-highlight);
+  width: 21.25rem;
+
+  transition: all 0.2s;
+}
+
+.login input:hover, .login input:focus {
+  border-color: rgba(0, 0, 0, 0.3);
 }
 
 @media screen and (max-width: 425px){
@@ -129,7 +136,8 @@
   height: 5rem;
   
   border-radius: 0 5px 5px 0;
-  border: 0;
+  border: 2px solid transparent;
+  outline: 0;
 
   background-color: rgba(0, 0, 0, 0.2);
   font-size: 2rem;
@@ -143,6 +151,14 @@
   outline-color: var(--white);
 }
 
+.loginButton:hover, .loginButton:focus {
+  border-color: rgba(0, 0, 0, 0.3);
+}
+
 .loginButtonActive {
   background-color: var(--green);
+}
+
+.loginButtonActive:hover, .loginButtonActive:focus {
+  border-color: var(--green-light);
 }

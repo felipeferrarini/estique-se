@@ -9,6 +9,7 @@
   padding: 2.5rem 0;
   position: fixed;
   left: 0;
+  top: 0;
   z-index: 100;
 
   background: var(--white);
@@ -77,4 +78,46 @@
 
 .exitButton:hover {
   color: var(--red);
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    
+    width: 100vw;
+    height: 5rem;
+    padding: 0 2.5rem;
+    left: 0;
+    top:0;
+  }
+
+  .navigate {  
+    flex-direction: row;
+    height: 100%;
+    width: max-content;
+  }
+  
+  .navigateButton {
+    width: 4rem;
+    height: 100%;
+    margin: 0 5px;
+  }
+  
+  .navigateButtonActive::before {
+    content: '';
+    height: 4px;
+    width: 100%;
+    border-radius: 0 0 5px 5px;
+    top: 0;
+    left: 0;
+    transition: all 0.3s;
+  }
+  
+  .exitButton {
+    height: 100%;
+    width: 4rem;
+    margin-bottom: 0;
+  }
 }

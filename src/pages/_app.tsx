@@ -3,6 +3,7 @@ import Head from 'next/head';
 import '../styles/global.css'
 import NProgress from 'nprogress';
 import Router from 'next/router';
+import { AuthProvider } from '../contexts/AuthContext';
 
 Router.events.on('routeChangeStart', () => {
   NProgress.start();
@@ -12,7 +13,7 @@ Router.events.on('routeChangeError', () => NProgress.done());
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
-    <>
+    <AuthProvider>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta charSet="utf-8" />
@@ -23,7 +24,7 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
         <title>Home Office Health</title>
       </Head>
       <Component {...pageProps} />
-    </>
+    </AuthProvider>
   );
 }
 

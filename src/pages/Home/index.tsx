@@ -1,11 +1,13 @@
 import { GetServerSideProps } from "next";
 import Head from "next/head";
+import { useContext } from "react";
 import ChallengeBox from "../../components/ChallengeBox";
 import {CompletedChallenges} from "../../components/CompletedChallenges";
 import { CountDown } from "../../components/CountDown";
 import { ExperienceBar } from "../../components/ExperienceBar";
 import { Profile } from "../../components/Profile";
 import SideBar from "../../components/SideBar";
+import { AuthContext, AuthProvider } from "../../contexts/AuthContext";
 import { ChallengesProvider } from "../../contexts/ChallengesContext";
 import { CountDownProvider } from "../../contexts/CountDownContex";
 import styles from '../../styles/pages/Home.module.css';
@@ -19,14 +21,18 @@ interface HomeProps {
 const Home: React.FC<HomeProps> = ({ 
   level, 
   currentExperience, 
-  challengesCompleted 
+  challengesCompleted
 }) => {
+
+  const { getUserData } = useContext(AuthContext);
+
+  // const user = getUserData();
 
   return (
     <ChallengesProvider 
-      level={level}
-      currentExperience={currentExperience}
-      challengesCompleted={challengesCompleted}
+    level={level}
+    currentExperience={currentExperience}
+    challengesCompleted={challengesCompleted}
     >
       <div className={styles.containerOver}>
         <SideBar/>
@@ -41,7 +47,7 @@ const Home: React.FC<HomeProps> = ({
           <CountDownProvider>
             <section>
               <div>
-                <Profile/>
+                <Profile userName={"felipe"}/>
                 <CompletedChallenges/>
                 <CountDown/>
               </div>
@@ -61,7 +67,7 @@ export default Home;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
-  const { level, currentExperience, challengesCompleted } = ctx.req.cookies;
+  const { level, currentExperience, challengesCompleted, userName } = ctx.req.cookies;
 
   return {
     props: { 

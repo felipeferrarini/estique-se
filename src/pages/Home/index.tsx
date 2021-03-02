@@ -1,21 +1,23 @@
 import { GetServerSideProps } from "next";
 import Head from "next/head";
-import { useContext } from "react";
 import ChallengeBox from "../../components/ChallengeBox";
 import {CompletedChallenges} from "../../components/CompletedChallenges";
 import { CountDown } from "../../components/CountDown";
 import { ExperienceBar } from "../../components/ExperienceBar";
 import { Profile } from "../../components/Profile";
 import SideBar from "../../components/SideBar";
-import { AuthContext, AuthProvider } from "../../contexts/AuthContext";
 import { ChallengesProvider } from "../../contexts/ChallengesContext";
 import { CountDownProvider } from "../../contexts/CountDownContex";
+import { userDataPros } from "../../contexts/FirestoreContext";
+import { firebaseAdmin } from "../../services/firebaseAdmin";
+import { firebaseClient } from "../../services/firebaseClient";
 import styles from '../../styles/pages/Home.module.css';
 
 interface HomeProps {
   level: number;
   currentExperience: number;
   challengesCompleted: number;
+  user: firebaseClient.default.User | null | undefined
 }
 
 const Home: React.FC<HomeProps> = ({ 
@@ -23,10 +25,6 @@ const Home: React.FC<HomeProps> = ({
   currentExperience, 
   challengesCompleted
 }) => {
-
-  const { getUserData } = useContext(AuthContext);
-
-  // const user = getUserData();
 
   return (
     <ChallengesProvider 
@@ -47,7 +45,7 @@ const Home: React.FC<HomeProps> = ({
           <CountDownProvider>
             <section>
               <div>
-                <Profile userName={"felipe"}/>
+                <Profile/>
                 <CompletedChallenges/>
                 <CountDown/>
               </div>
@@ -67,13 +65,35 @@ export default Home;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
-  const { level, currentExperience, challengesCompleted, userName } = ctx.req.cookies;
+  try {
+    const {token} = ctx.req.cookies;
+    const user = await firebaseAdmin.auth().verifyIdToken(token);
 
-  return {
-    props: { 
-      level: Number(level),
-      currentExperience: Number(currentExperience),
-      challengesCompleted: Number(challengesCompleted)
+    const { level, currentExperience, challengesCompleted } = await firebaseAdmin.firestore()
+      .collection('users')
+      .doc(user.uid)
+      .get()
+      .then(res => {
+        return res.data() as userDataPros;
+    });
+
+    return {
+      props: { 
+        level: Number(level),
+        currentExperience: Number(currentExperience),
+        challengesCompleted: Number(challengesCompleted),
+        user
+      }
     }
+  } catch (err) {
+    // console.log(err);
+
+    return {
+      props: {} as never,
+      redirect: {
+        statusCode: 302,
+        destination: '/Login',
+      }
+    };
   }
 }

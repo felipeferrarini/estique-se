@@ -1,44 +1,57 @@
 import styles from '../../styles/pages/Login.module.css';
-import { FaGithub } from 'react-icons/fa'
-import { MdChevronRight } from 'react-icons/md';
-import { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '../../contexts/AuthContext';
+import { FaFacebook, FaGithub, FaGoogle } from 'react-icons/fa'
 import { GetServerSideProps } from 'next';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import axios from 'axios';
+import { firebaseAdmin } from '../../services/firebaseAdmin';
+import { firebaseClient } from '../../services/firebaseClient';
+import { useContext } from 'react';
+import { FirestoreContext } from '../../contexts/FirestoreContext';
 
-interface LoginProps {
-  token?: string;
-}
+function Login() {
 
-function Login({ token }: LoginProps) {
-  const [user, setUser] = useState('');
-  const { requestCode, storeToken } = useContext(AuthContext);
+  const { initUser } = useContext(FirestoreContext);
 
-  useEffect(() => {
-    if(token !== '') {
-      storeToken(token || 'none');
+  const handleSubmit = async (type: 'facebook' | 'github' | 'google') => {
+    let provider: firebaseClient.default.auth.AuthProvider;
+
+    switch(type){
+      case 'google':
+        provider = new firebaseClient.default.auth.GoogleAuthProvider();    
+        break;
+      case 'facebook':
+        provider = new firebaseClient.default.auth.FacebookAuthProvider();    
+        break;
+      case 'github':
+        provider = new firebaseClient.default.auth.GithubAuthProvider();    
+        break;
+      default:
+        provider = new firebaseClient.default.auth.GoogleAuthProvider();    
+        break;
     }
-  }, [token]);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) =>{
-    event.preventDefault();
-
-    if(user.length > 0) {
-      requestCode(user);
-    } else {
-      toast.error('Digite um nome de usuário!', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
+    await firebaseClient.default
+      .auth()
+      .signInWithPopup(provider)
+      .then(({user}) => {
+        initUser(user).then(()=>{
+          window.location.href = '/Home';
+        }).catch(err => console.log(err));
+      })
+      .catch(err => {
+        switch(err.code){
+          case 'auth/account-exists-with-different-credential':
+            toast.error('Conta já cadastrada através de outro seriço (google, facebook ou github)');
+            break;
+          case 'auth/popup-closed-by-user':
+            toast.error('A janela foi fechada antes de finalizar o login.');
+            break;
+          default:
+            console.log(err.code);
+            break;
+        }
       });
-    }
-  }
+  };
 
   return (
     <>
@@ -61,23 +74,23 @@ function Login({ token }: LoginProps) {
           <strong>Bem-vindo</strong>
           
           <p>
-            <FaGithub/>
-            Faça login com seu Github para começar
+            Faça login com o Google, GitHub ou Facebook para começar
           </p>
 
-          <form className={styles.login} onSubmit={handleSubmit}>
-            <input 
-              placeholder="Digite seu username" 
-              type="text" 
-              value={user}
-              onChange={(e) => setUser(e.target.value)}
-            />
-            <button 
-              className={`${styles.loginButton} ${user.length > 0 && styles.loginButtonActive}`}
-            >
-              <MdChevronRight/>
+          <div className={styles.external}>
+            <button onClick={() => handleSubmit('google')} type="button">
+              <FaGoogle/>
+              Google
             </button>
-          </form>
+            <button onClick={() => handleSubmit('github')} type="button">
+              <FaGithub/>
+              GitHub
+            </button>
+            <button onClick={() => handleSubmit('facebook')} type="button">
+              <FaFacebook/>
+              Facebook
+            </button>
+          </div>
         </div>
       </div>
     </>
@@ -87,49 +100,18 @@ function Login({ token }: LoginProps) {
 export default Login;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  try {
+    const {token} = ctx.req.cookies;
+    await firebaseAdmin.auth().verifyIdToken(token);
 
-  const { logged } = ctx.req.cookies;
-  const code = ctx.query.code;
-
-  if( logged === 'true' ) {
     return {
-      props: {},
+      props: {} as never,
       redirect: {
-        statusCode: 301,
+        statusCode: 302,
         destination: '/Home'
       }
-    }
-  } else if(code) {
-    const params = {
-      client_id: '733fb55840126282b0f1',
-      client_secret: 'fdf0acaaa13ed3bad406911c86a7642bcfc9467b',
-      code: code,
-      redirect_uri: 'http://localhost:3000/Login',
-      state: 'user'
-    }
-
-    const token = await axios.post('https://github.com/login/oauth/access_token', params).then(res => {
-      const response = new URLSearchParams(res.data);
-
-      if(response.get('error') === 'bad_verification_code') {
-        throw new Error('codigo de verificação expirado');
-      } else {
-        return response.get('access_token')
-      }
-    }).catch(err => {
-      console.log(err.message)
-      return 'none';
-    });
-
-    return {
-      props: {
-        code: code || undefined,
-        token
-      }
-    }
+    };
+  } catch (err) {
+    return { props: {} as never };
   }
-
-  return {
-    props: {} as never
-  }
-}
+};

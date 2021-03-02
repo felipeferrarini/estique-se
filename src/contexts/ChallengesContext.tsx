@@ -2,6 +2,8 @@ import { createContext, ReactNode, useEffect, useState} from 'react';
 import challenges from '../../challenges.json';
 import Cookies from 'js-cookie';
 import LevelUpModal from '../components/LevelUpModal';
+import { firebaseClient } from '../services/firebaseClient';
+import { useAuth } from './AuthContext';
 
 interface challengeProps {
   type: "body" | "eye" | string;
@@ -43,17 +45,25 @@ export function ChallengesProvider({
   const [activeChallenge, setActiveChallenge] = useState<null | challengeProps>(null);
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
 
+  const { user } = useAuth();
+
   const experienceToNextLevel = Math.pow((level + 1) * 4, 2);
 
   useEffect(() => {
-    Cookies.set('level', String(level));
-    Cookies.set('currentExperience', String(currentExperience));
-    Cookies.set('challengesCompleted', String(challengesCompleted));
+    if(user){
+      const db =  firebaseClient.default.firestore();
+
+      db.collection('users').doc(user?.uid).update({
+        level,
+        currentExperience,
+        challengesCompleted
+      })
+    }
   }, [level, currentExperience, challengesCompleted]);
 
-  // useEffect(() => {
-  //   Notification.requestPermission();
-  // }, [])
+  useEffect(() => {
+    Notification.requestPermission();
+  }, [])
 
   function levelUp() {
     setLevel(level + 1);
@@ -72,11 +82,11 @@ export function ChallengesProvider({
 
     new Audio('/notification.mp3').play();
 
-    // if(Notification.permission === 'granted') {
-    //   new Notification("Novo desafio", {
-    //     body: `Valendo ${challenge.amount} xp!`
-    //   })
-    // }
+    if(Notification.permission === 'granted') {
+      new Notification("Novo desafio", {
+        body: `Valendo ${challenge.amount} xp!`
+      })
+    }
   }
 
   function resetChallenge() {

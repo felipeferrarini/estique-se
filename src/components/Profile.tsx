@@ -1,27 +1,28 @@
+import { resourceUsage } from 'process';
 import { stringify } from 'querystring';
-import { useContext, useState } from 'react';
-import { AuthContext, UserDataProps } from '../contexts/AuthContext';
+import { useContext, useEffect} from 'react';
+import { useAuth } from '../contexts/AuthContext';
 import { ChallengesContext } from '../contexts/ChallengesContext';
 import styles from '../styles/components/Profile.module.css';
 
-interface ProfileProps {
-  userName: string;
-}
-
-export function Profile({ userName }: ProfileProps) {
+export function Profile() {
   const { level } = useContext(ChallengesContext);
-  const [user, setUser] = useState({} as UserDataProps);
 
-  const { getUserData } = useContext(AuthContext);
+  const {user} = useAuth();
 
-  getUserData().then(res => setUser(res));
+  if(!user){
+    return(
+      <div className={styles.profileContainer}>
+        <span>carregando informações...</span>
+      </div>
+    )
+  }
 
   return (
     <div className={styles.profileContainer}>
-    <img src={user.avatar_url} alt="Felipe Ferrarini"/>
-
+      <img src={user?.photoURL|| ''}alt="User Name"/>
       <div>
-        <strong>{user.name}</strong>
+        <strong>{user?.displayName}</strong>
         <p>
           <img src="icons/level.svg" alt="Level"/>
           Level {level}

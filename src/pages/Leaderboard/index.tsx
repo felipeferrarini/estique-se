@@ -1,17 +1,24 @@
 import SideBar from '../../components/SideBar';
 import styles from '../../styles/pages/Leaderboard.module.css';
 import persons from '../../../personas.json';
+import { GetServerSideProps } from 'next';
+import { firebaseAdmin } from '../../services/firebaseAdmin';
+import { userDataPros } from '../../contexts/FirestoreContext';
 
-interface PersonsProps {
-  position: number;
-  name: string;
-  profileImg: string;
+interface userProps {
+  displayName: string;
+  email: string;
+  photoURL: string;
   level: number;
   challengesCompleted: number;
   currentExperience: number;
 }
 
-const Leaderboard: React.FC = () => {
+interface Leaderboard {
+  users: userProps[];
+}
+
+function Leaderboard({ users }: Leaderboard) {
   return (
     <div className={styles.containerOver}>
       <SideBar/>
@@ -30,19 +37,19 @@ const Leaderboard: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {persons.map((person) => (
-              <tr>
+            {users.sort(function(a, b){return b.level-a.level}).map((user, index) => (
+              <tr key={index}>
                 <td className={styles.tablePosition}>
-                  {person.position}
+                  {index+1}
                 </td>
 
                 <td className={styles.tableProfile}>
-                  <img src={person.profileImg} alt="Perfil do usuario"/>
+                  <img src={user.photoURL} alt="Perfil do usuario"/>
                   <div>
-                    <strong>{person.name}</strong>
+                    <strong>{user.displayName}</strong>
                     <span>
                       <img src="/icons/level.svg" alt="Level"/>
-                      Level {person.level}
+                      Level {user.level}
                     </span>
                   </div>
                 </td>
@@ -51,7 +58,7 @@ const Leaderboard: React.FC = () => {
                   className={styles.tableExperience}
                 >
                   <div>
-                    <strong>{person.challengesCompleted}</strong> completados
+                    <strong>{user.challengesCompleted}</strong> completados
                   </div>
                 </td>
                 
@@ -59,7 +66,7 @@ const Leaderboard: React.FC = () => {
                   className={styles.tableExperience}
                 >
                   <div>
-                    <strong>{person.currentExperience}</strong> xp
+                    <strong>{user.currentExperience}</strong> xp
                   </div>
                 </td>
               </tr>
@@ -73,3 +80,40 @@ const Leaderboard: React.FC = () => {
 }
 
 export default Leaderboard;
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+
+  try {
+    const { token } = ctx.req.cookies;
+    await firebaseAdmin.auth().verifyIdToken(token);
+
+    const { docs } = await firebaseAdmin.firestore()
+      .collection('users')
+      .get()
+      .then(querySnaphot => {
+        return querySnaphot;
+    });
+
+    const users:userProps[] = [];
+
+    docs.forEach((doc)=> {
+      users.push(doc.data() as userProps);
+    });
+
+    return {
+      props: { 
+        users
+      }
+    }
+  } catch (err) {
+    // console.log(err);
+
+    return {
+      props: {} as never,
+      redirect: {
+        statusCode: 302,
+        destination: '/Login',
+      }
+    };
+  }
+}

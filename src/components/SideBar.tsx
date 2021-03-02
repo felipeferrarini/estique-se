@@ -3,9 +3,17 @@ import { BiHomeAlt } from 'react-icons/bi';
 import { FiAward } from 'react-icons/fi';
 import { useRouter } from 'next/router';
 import { MdExitToApp } from 'react-icons/md';
+import { firebaseClient } from '../services/firebaseClient';
 
 export default function SideBar() {
   const { pathname, push } = useRouter();
+
+  const router = useRouter();
+
+  async function logOut() {
+    await firebaseClient.default.auth().signOut();
+    router.reload();
+  }
 
   return (
     <div className={styles.container}>
@@ -28,7 +36,7 @@ export default function SideBar() {
           <FiAward/>
         </button>
       </div>
-      <button className={styles.exitButton}>
+      <button onClick={logOut} className={styles.exitButton}>
         <MdExitToApp/>
       </button>
     </div>

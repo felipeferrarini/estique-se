@@ -7,26 +7,35 @@
   background: var(--blue);
   color: var(--gray-line);
 
-  height: 100vh;
+  height: 100%;
 
-  font: 400 1rem "Roboto", sans-serif;
+  padding-top: 5rem;
+  width: 100%;
 }
 
 .main {
+  width: 80%;
+  align-items: center;
   display: flex;
   flex-direction: column;
+
+  overflow-y: hidden;
 }
 
-.main h1 {
-  font-size: 4rem;
-  font-weight: 800;
-  margin-bottom: 2rem;
-  color: var(--white);
+.main header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.main h2 {
+.main header > img {
+  max-width: 90%;
+}
+
+.main header h2 {
   font-size: 2rem;
-  margin-bottom: 2rem;
+  margin: 2rem;
 }
 
 .main button {
@@ -63,14 +72,77 @@
   margin-left: 1.5rem;
 }
 
-.main img {
-  height: 35rem;
-  box-shadow: 0 0 60px rgba(0, 0, 0, 0.08);
+.main section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  margin: 5rem;
+  width: 100%;
+
+  border-radius: 40px;
 }
 
-@media screen and (max-width: 1000px){
-  .main img {
-    height: 10rem;
-  }
+.main section h3 {
+  color: var(--white);
+  font-size: 2.5rem;
   
+  margin-bottom: 1rem;
+}
+
+.main section p {
+  color: var(--gray-line);
+  font-size: 1.25rem;
+}
+
+.main section img {
+  width: 40%;
+  height: auto;
+
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+  margin: 0 2rem;
+}
+
+.imgMobile {
+  display: none;
+}
+
+.main section:nth-child(3) img {
+  box-shadow: none;
+}
+
+@media screen and (max-width: 425px) {
+  .main {
+    text-align: center;
+    width: 90%;
+  }
+
+  .main section {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem;
+  }
+
+  .main section > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .main section > img {
+    display: none;
+  }
+
+  .main section img {
+    width: 60%;
+    margin-bottom: 1rem;
+  }
+
+  .imgMobile {
+    display: flex;
+  }
 }

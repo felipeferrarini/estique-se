@@ -18,7 +18,7 @@ export function ExperienceBar() {
           style={{ left: `${percentToNextLevel}%` }}
         >
           <MdArrowDropUp/>
-          {currentExperience}
+          {currentExperience} xp
         </span>
       </div>
       <span>{experienceToNextLevel} xp</span> 

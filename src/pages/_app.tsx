@@ -21,9 +21,12 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
           <meta charSet="utf-8" />
           <meta
             name="description"
-            content="Projeto criado durante o Next Level Week #4 da RockectSeat"
+            content="Levante.se e se exercite durante seu dia de trabalho! 
+              pensando nisso desenvolvemos o Lenvate.se para te incentivar a se 
+              movimentar e não ficar 100% do tempo sentado na frente do 
+              computador."
           />
-          <title>Home Office Health</title>
+          <title>Levante.se | Saúde durante o Home Office</title>
         </Head>
         <Component {...pageProps} />
       </FirestoreProvider>

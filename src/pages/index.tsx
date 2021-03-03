@@ -10,7 +10,7 @@ export default function Landing () {
       <div className={styles.main}>
         <header>
           <h1>
-            Home Office Health
+            Levante.se | Saúde durante o Home Office
           </h1>
           <h2>
             Next Level Week #04

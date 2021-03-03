@@ -17,7 +17,7 @@ export default function SideBar() {
 
   return (
     <div className={styles.container}>
-      <img src="/icone.svg" alt="Icone" onClick={() => push('/')}/>
+      <img src="/icone.svg" alt="Icone" onClick={() => push('/Home')}/>
       <div className={styles.navigate}>
         <button 
           className={

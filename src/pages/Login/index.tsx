@@ -1,47 +1,67 @@
-import styles from '../../styles/pages/Login.module.css';
-import { FaFacebook, FaGithub, FaGoogle } from 'react-icons/fa'
+import { FaFacebook, FaGithub, FaGoogle } from 'react-icons/fa';
 import { GetServerSideProps } from 'next';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { firebaseAdmin } from '../../services/firebaseAdmin';
 import { firebaseClient } from '../../services/firebaseClient';
-import { useContext } from 'react';
-import { FirestoreContext } from '../../contexts/FirestoreContext';
+import React, { useContext } from 'react';
+import { Container, Main, Providers } from '../../styles/pages/Login.styles';
+import { AuthContext } from '../../contexts/AuthContext';
 
-function Login() {
+function Login(): JSX.Element {
+  const { initUser } = useContext(AuthContext);
 
-  const { initUser } = useContext(FirestoreContext);
+  // função para adiocionar algo em todos os usuarios do firebase
+  const handleTeste = () => {
+    const db = firebaseClient.default.firestore();
+
+    db.collection('users')
+      .get()
+      .then(res => {
+        res.forEach(doc => {
+          db.collection('users').doc(doc.id).update({
+            theme: 'light'
+          });
+        });
+
+        console.log('terminou');
+      });
+  };
 
   const handleSubmit = async (type: 'facebook' | 'github' | 'google') => {
     let provider: firebaseClient.default.auth.AuthProvider;
 
-    switch(type){
+    switch (type) {
       case 'google':
-        provider = new firebaseClient.default.auth.GoogleAuthProvider();    
+        provider = new firebaseClient.default.auth.GoogleAuthProvider();
         break;
       case 'facebook':
-        provider = new firebaseClient.default.auth.FacebookAuthProvider();    
+        provider = new firebaseClient.default.auth.FacebookAuthProvider();
         break;
       case 'github':
-        provider = new firebaseClient.default.auth.GithubAuthProvider();    
+        provider = new firebaseClient.default.auth.GithubAuthProvider();
         break;
       default:
-        provider = new firebaseClient.default.auth.GoogleAuthProvider();    
+        provider = new firebaseClient.default.auth.GoogleAuthProvider();
         break;
     }
 
     await firebaseClient.default
       .auth()
       .signInWithPopup(provider)
-      .then(({user}) => {
-        initUser(user).then(()=>{
-          window.location.href = '/Home';
-        }).catch(err => console.log(err));
+      .then(({ user }) => {
+        initUser(user)
+          .then(() => {
+            window.location.href = '/Home';
+          })
+          .catch(err => console.log(err));
       })
       .catch(err => {
-        switch(err.code){
+        switch (err.code) {
           case 'auth/account-exists-with-different-credential':
-            toast.error('Conta já cadastrada através de outro seriço (google, facebook ou github)');
+            toast.error(
+              'Conta já cadastrada através de outro seriço (google, facebook ou github)'
+            );
             break;
           case 'auth/popup-closed-by-user':
             toast.error('A janela foi fechada antes de finalizar o login.');
@@ -66,42 +86,54 @@ function Login() {
         draggable
         pauseOnHover
       />
-      <div className={styles.container}>
-        <img src="/logo.svg" alt="Logo"/>
-        <div className={styles.main}>
-          <img src="/logo-white.svg" alt="Logo Home Office Healh"/>
-          
-          <strong>Bem-vindo</strong>
-          
-          <p>
-            Faça login com o Google, GitHub ou Facebook para começar
-          </p>
+      <Container>
+        <img src="/logo.svg" alt="Logo" />
+        <Main>
+          <img src="/logo-white.svg" alt="Logo Estique.se" />
 
-          <div className={styles.external}>
-            <button onClick={() => handleSubmit('google')} type="button">
-              <FaGoogle/>
+          <strong>Bem-vindo</strong>
+
+          <p>Faça login com o Google, GitHub ou Facebook para começar</p>
+
+          <Providers>
+            <button
+              className="Google"
+              onClick={() => handleSubmit('google')}
+              type="button"
+            >
+              <FaGoogle />
               Google
             </button>
-            <button onClick={() => handleSubmit('github')} type="button">
-              <FaGithub/>
+            <button
+              className="GitHub"
+              onClick={() => handleSubmit('github')}
+              type="button"
+            >
+              <FaGithub />
               GitHub
             </button>
-            <button onClick={() => handleSubmit('facebook')} type="button">
-              <FaFacebook/>
+            <button
+              className="Facebook"
+              onClick={() => handleSubmit('facebook')}
+              type="button"
+            >
+              <FaFacebook />
               Facebook
             </button>
-          </div>
-        </div>
-      </div>
+          </Providers>
+          <a href="#">Problemas de acesso? entre em contato</a>
+          {/* <button onClick={handleTeste}>teste</button> */}
+        </Main>
+      </Container>
     </>
   );
 }
 
 export default Login;
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async ctx => {
   try {
-    const {token} = ctx.req.cookies;
+    const { token } = ctx.req.cookies;
     await firebaseAdmin.auth().verifyIdToken(token);
 
     return {

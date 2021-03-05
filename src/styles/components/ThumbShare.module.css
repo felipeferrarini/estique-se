@@ -1,95 +1,83 @@
-.levelupContainer {
-  background: var(--white);
-  width: 100%;
-  max-width: 400px;
-  padding: 2rem 3rem;
-  border-radius: 5px;
-  box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
-  text-align: center;  
-  position: relative;
-  z-index: 100;
-} 
-
-
-.levelupContainer header {
-  font-size: 8.75rem;
-  font-weight: 600;
-  color: var(--blue);
-  background: url('/icons/levelup.svg') no-repeat center;
-  background-size: contain;
-}
-
-.levelupContainer strong {
-  font-size: 1.875rem;
-  color: var(--title);
-}
-
-.levelupContainer p {
-  font-size: 1.25rem;
-  color: var(--text);
-  margin-top: 0.25rem;
-}
-.closeButton {
-  position: absolute;
-  right: 0.5rem;
-  top: 0.5rem;
-  background: transparent;
-  border: 0;
-  font-size: 0px;
-}
-
-.shareButton {
-  height: 5rem;
-  width: calc(100% + 6rem);  
-  margin: -2rem -3rem;
-  margin-top: 2rem;
+.overlay {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 
   display: flex;
   align-items: center;
   justify-content: center;
+  /* position: absolute; */
+}
 
-  border: 0;
-  border-top: 2px solid var(--gray-line);
-  border-radius: 0 0 5px 5px;
-  background-color: var(--blue-light);
+.levelupContainer {
+  width: 1200px;
+  height: 630px;
+  
+  background: var(--white);
 
-  font-size: 1.25rem;
+  text-align: center;  
+
+  position: relative;
+  z-index: 100;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+} 
+
+.levelupContainer > div {
+  /* width: 30%; */
+  margin: 0 76px;
+}
+
+
+.first header {
+  font-size: 18rem;
   font-weight: 600;
+  color: var(--blue);
+  background: url('/icons/levelup.svg') no-repeat center;
+  background-size: contain;
 
-  transition: all 0.2s;
+  text-shadow: 0 0 20px var(--blue-transparent);
 }
 
-.shareButtonFacebook {
-  color: var(--blue-facebook);
+.first strong {
+  font-size: 3rem;
+  color: var(--title);
 }
 
-.shareButtonTwitter {
-  color: var(--blue-twitter);
+.second {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  
+  width: max-content;
 }
 
-.shareButtonTwitter:hover {
-  background: var(--blue-twitter);
-  color: var(--white);
-  border-color: transparent;
+.second strong {
+  font-size: 1.5rem;
+  color: var(--gray);
+  text-align: start;
+  margin: 0.5rem 0;
+
+  width: 100%;
 }
 
-.shareButtonFacebook:hover {
-  background: var(--blue-facebook);
-  color: var(--white);
-  border-color: transparent;
+.second p {
+  font-size: 2.25rem;
+  font-weight: 500;
+  text-align: start;
+
+  width: 100%;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+
+  border-bottom: 2px solid var(--gray-line);
 }
 
-.shareButton svg {
-  margin-left: 1rem;
-  height: 1.5rem;
-  width: 1.5rem;
+.second span {
+  color: var(--blue);
 }
-
-.shareButton svg path {
-  transition: all 0.2s;
-}
-
-.shareButton:hover svg path{
-  fill: var(--white);
-}
-

@@ -13,13 +13,29 @@
   width: 100%;
 }
 
+.container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background: var(--blue);
+}
+
 .main {
   width: 80%;
   align-items: center;
   display: flex;
   flex-direction: column;
 
-  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+.main::-webkit-scrollbar {
+  width: 5px;
+}
+
+.main::-webkit-scrollbar-thumb {
+  background: var(--blue);
 }
 
 .main header {

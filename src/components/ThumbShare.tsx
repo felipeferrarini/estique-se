@@ -1,5 +1,5 @@
 import React from 'react';
-import { userDataPros } from '../contexts/FirestoreContext';
+import { userDataPros } from '../@types/userData';
 import styles from '../styles/components/ThumbShare.module.css';
 
 export function ThumbShare({

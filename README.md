@@ -1,34 +1,95 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<div align="center">
+  <img src=".github/logo.svg" alt="estique.se"/>
+</div>
 
-## Getting Started
 
-First, run the development server:
+### :information_source: Info
 
-```bash
-npm run dev
-# or
-yarn dev
+Projeto desenvolvido durante a 4ª semana Next Level Week da [Rocketseat][https://rocketseat.com.br/]. A trilha em escolhida foi a de ReactJS com foco na utilização do NextJS, ministrada pelo [@diego3g][https://github.com/diego3g].
+
+O projeto pode ser acessado através do link [https://estiquese.vercel.app][https://estiquese.vercel.app].
+
+### ✨ Tecnologias
+
+A proposta inicial do projeto sugeriu a utilização de:
+
+- [React](https://reactjs.org)
+- [Next.js](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+
+Além do proposto, foi utilizado:
+
+- [Styled Components][https://styled-components.com/]
+- [Framer Motion][https://www.framer.com/api/motion/]
+- [Firebase][https://firebase.google.com/]
+- [Eslint][https://eslint.org/]
+
+### ⚙ Pré-requisitos
+
+Antes de começar você vai precisar ter na sua máquina as seguintes ferramentas:
+
+* [Node + NPM](https://nodejs.org/)
+* [Yarn](https://yarnpkg.com/)
+* [Visual Studio Code (Editor de código)](https://code.visualstudio.com/)
+
+**Siga este guia para uma melhor explicação:**
+
+[Configurações do ambiente - React](https://www.notion.so/Configura-es-do-ambiente-React-76f2963a042f45b9b9b567a2795945b8)
+
+## 🎲 Rodando a aplicação
+
+Você pode fazer um clone deste repositório direto no seu terminal:
+
+```sh
+git clone https://github.com/felipeferrarini/home-office-health
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+ou fazer o download do zip do repositório.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Após isto, digite os seguintes comandos no terminal:
 
-## Learn More
+```sh
+# Instalando as dependências
+$ yarn
+#ou
+$ npm install
 
-To learn more about Next.js, take a look at the following resources:
+# Iniciando o projeto
+$ yarn start
+#ou
+$ npm start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### :fire: Firebase
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Foi adicionado ao projeto um sistema de login e armazenamento de dados utilizando o Firebase (Authentication + Firestore) e para que o projeto funcione por completo é necessário criar um projeto no Firebase. Você pode acessar esse [link][https://firebase.google.com/docs/web/setup?hl=pt-br] para auxila-lo na criação.
 
-## Deploy on Vercel
+Após o projeto iniciado, crie um arquivo na base do projeto denominado `.env.local` com a seguinte estrutura:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```env
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+  NEXT_PUBLIC_FIREBASE_API_KEY= ***apiKey***
+  NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN= ***authDomain***
+  NEXT_PUBLIC_FIREBASE_DATABASE_URL= ***databaseURL***
+  NEXT_PUBLIC_FIREBASE_PROJECT_ID= ***projectId***
+  NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET= ***storageBucket***
+  NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID= ***messagingSenderId***
+  NEXT_PUBLIC_FIREBASE_APP_ID= ***appId***
+  NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID= ***measurementId***
+  NEXT_PUBLIC_FIREBASE_ADMIN_PRIVATE_KEY= ***admPrivateKey***
+  NEXT_PUBLIC_FIREBASE_ADMIN_CLIENT_EMAIL= ***admClientEmail***
+  NEXT_PUBLIC_FIREBASE_ADMIN_PROJECT_ID= ***projectId***
+
+```
+
+### 📝 Licença
+
+Este projeto está sob a MIT License. Veja [LICENSE](./LICENSE) para mais informações.
+
+---
+
+<p align="center">
+  Feito com 💜 por <a href="https://www.linkedin.com/in/arimario-jesus">Ari Jesus</a>
+</p>

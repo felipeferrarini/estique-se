@@ -35,12 +35,12 @@ export default function Landing(): JSX.Element {
         </Section>
 
         <Section direction="right">
-          <img src="/screenshotHome.jpg" alt="" />
+          <img src="/screenshotHome.png" alt="" />
           <div>
             <h3>A Solução!</h3>
             <img
               className={styles.imgMobile}
-              src="/screenshotHome.jpg"
+              src="/screenshotHome.png"
               alt=""
             />
             <p>
@@ -58,7 +58,7 @@ export default function Landing(): JSX.Element {
             <h3>Seja o melhor!</h3>
             <img
               className={styles.imgMobile}
-              src="/screenshotLeaderboard.jpg"
+              src="/screenshotLeaderboard.png"
               alt=""
             />
             <p>
@@ -66,7 +66,7 @@ export default function Landing(): JSX.Element {
               compartilhar com seus amigos!
             </p>
           </div>
-          <img src="/screenshotLeaderboard.jpg" alt="" />
+          <img src="/screenshotLeaderboard.png" alt="" />
         </Section>
       </div>
     </div>

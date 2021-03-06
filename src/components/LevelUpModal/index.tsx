@@ -17,12 +17,7 @@ export function LevelUpModal(): JSX.Element {
           <img src="/icons/close.svg" alt="Fechar modal" />
         </CloseButton>
 
-        <ShareButton
-          onClick={() =>
-            console.log('Calma ganfanhoto, ainda estamos impletando a opção!')
-          }
-          className="twitter"
-        >
+        <ShareButton className="twitter">
           Compartilhar no Twitter
           <svg
             width="22"
@@ -37,12 +32,7 @@ export function LevelUpModal(): JSX.Element {
             />
           </svg>
         </ShareButton>
-        <ShareButton
-          onClick={() =>
-            console.log('Calma ganfanhoto, ainda estamos impletando a opção!')
-          }
-          className="facebook"
-        >
+        <ShareButton className="facebook">
           Compartilhar no Facebook
           <svg
             width="24"
